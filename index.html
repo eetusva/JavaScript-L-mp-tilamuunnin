@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+	<title>Lämpötilamuunnin</title>
+</head>
+<body>
+	<h1>Lämpötilamuunnin</h1>
+	<p>Syötä lämpötila:</p>
+	<input type="text" id="input" placeholder="Syötä lämpötila">
+	<br><br>
+	<input type="radio" id="celsius" name="temperature" value="celsius" checked>
+	<label for="celsius">Celsius</label>
+	<br>
+	<input type="radio" id="fahrenheit" name="temperature" value="fahrenheit">
+	<label for="fahrenheit">Fahrenheit</label>
+	<br><br>
+	<p>Valitse desimaalien tarkkuus:</p>
+	<select id="precision">
+		<option value="1">1 desimaali</option>
+		<option value="2">2 desimaalia</option>
+		<option value="3" selected>3 desimaalia</option>
+	</select>
+	<br><br>
+	<button onclick="convertTemperature()">Muunna</button>
+	<br><br>
+	<p id="result"></p>
+
+	<script>
+		function convertTemperature() {
+			var input = document.getElementById("input").value;
+			var celsius = document.getElementById("celsius").checked;
+			var fahrenheit = document.getElementById("fahrenheit").checked;
+			var precision = document.getElementById("precision").value;
+			var resultElement = document.getElementById("result");
+			var result;
+			if (isNaN(input) || input == "") {
+				resultElement.innerHTML = "Virheellinen syöte. Syötä lämpötila numerona.";
+				return;
+			}
+			if (celsius) {
+				if (input < -273.15) {
+					resultElement.innerHTML = "Syöttämäsi lämpötila on pienempi kuin absoluuttinen nollapiste (-273,15 °C).";
+					return;
+				}
+				result = ((input * 9/5) + 32).toFixed(precision);
+				resultElement.innerHTML = input + " Celsius-astetta on " + result + " Fahrenheit-astetta.";
+			} else if (fahrenheit) {
+				if (input < -459.67) {
+					resultElement.innerHTML = "Syöttämäsi lämpötila on pienempi kuin absoluuttinen nollapiste (-459,67 °F).";
+					return;
+				}
+				result = ((input - 32) * 5/9).toFixed(precision);
+				resultElement.innerHTML = input + " Fahrenheit-astetta on " + result + " Celsius-astetta.";
+			}
+		}
+	</script>
+</body>
+</html>
